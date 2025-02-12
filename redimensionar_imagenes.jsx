@@ -28,6 +28,11 @@ if (inputFolder && outputFolder) {
             // Crear un nuevo documento de 500x500 px
             var newDoc = app.documents.add(500, 500, doc.resolution, "Lienzo_500x500", NewDocumentMode.RGB);
 
+            // Asegurar que el documento abierto sea el activo
+            app.activeDocument = doc;
+            doc.selection.selectAll();
+            doc.selection.copy();
+
             // Seleccionar la imagen escalada y copiarla
             doc.selection.selectAll();
             doc.selection.copy();
