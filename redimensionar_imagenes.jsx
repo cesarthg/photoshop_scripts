@@ -32,18 +32,20 @@ if (inputFolder && outputFolder) {
             app.activeDocument = doc;
             doc.selection.selectAll();
             doc.selection.copy();
-
-            // Seleccionar la imagen escalada y copiarla
-            doc.selection.selectAll();
-            doc.selection.copy();
             doc.close(SaveOptions.DONOTSAVECHANGES);
 
             // Pegar la imagen en el nuevo lienzo
+            app.activeDocument = newDoc;
             newDoc.paste();
             var pastedLayer = newDoc.activeLayer;
 
+            // Calcular las dimensiones de la capa pegada
+            var bounds = pastedLayer.bounds;
+            var pastedWidth = bounds[2] - bounds[0];
+            var pastedHeight = bounds[3] - bounds[1];
+
             // Centrar la imagen
-            pastedLayer.translate((500 - pastedLayer.bounds[2]) / 2, (500 - pastedLayer.bounds[3]) / 2);
+            pastedLayer.translate((500 - pastedWidth) / 2 - bounds[0], (500 - pastedHeight) / 2 - bounds[1]);
 
             // Guardar la imagen en la carpeta de salida
             var saveFile = new File(outputFolder + "/" + file.name);
